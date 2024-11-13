@@ -121,3 +121,5 @@ const greet = function(greeting) {
 const greeterHey = greet('Hey');
 greeterHey('Waleed');
 greeterHey('Kamran');
+
+console.log("Muhammad Waleed");
