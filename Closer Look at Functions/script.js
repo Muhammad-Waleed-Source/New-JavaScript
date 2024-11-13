@@ -113,7 +113,7 @@ textFormatter('hello i am muhammad waleed', toSnakeCase);*/
 
 
 // Function Returning Functions.........................................................................
-const greet1 = function(greeting) {
+/*const greet1 = function(greeting) {
     return function(name) {
         console.log(`${greeting} ${name}`);
     };
@@ -127,6 +127,93 @@ greet1('Hello')('Ali'); // same as above greeterHey function
 
 // Challenge (Writing the above greet function as arrow function)
 const greet2 = greeting => name => console.log(`${greeting} ${name}`);
-greet2('Hello')('Faisal');
+greet2('Hello')('Faisal'); */
 
+// (13-11-2024)
+// The call and apply method.............................................................................
+/*const PIA = {
+    airline: 'PIA',
+    code: 'LH',
+    bookings: [],
+    // book: function() {}
+    book(flightNum, name) { // same as above
+        console.log(`${name} booked a seat on ${this.airline} flight ${this.code}${flightNum}`);
+        this.bookings.push({flight: `${this.code}${flightNum}`, name});
+    },
+    
+};
 
+PIA.book(239, 'Waleed');
+PIA.book(347, 'Sabir');
+console.log(PIA.bookings);
+
+// Suppose after some time PIA created a new airline
+const pWings = {
+    airline: 'pWings',
+    code: 'PW',
+    bookings: [],
+};
+
+const book = PIA.book; // book function
+
+// book(23, 'Sabir Sultan'); does not work
+
+// call method usage
+book.call(pWings, 23, 'Sabir Sultan');
+console.log(pWings);
+
+book.call(PIA, 238, 'Badar Jamal');
+console.log(PIA);
+
+const swiss = {
+    airline: 'Swiss Air Line',
+    code: 'LX',
+    bookings: []
+}
+
+book.call(swiss, 583, 'Sabir Sultan');
+console.log(swiss);
+
+// Apply method(same as call method but it does not get the elements as a list but as an array and then pass it to the objects)
+// It is not that much used in modern javascript
+const flightData = [573, 'Basit'];
+book.apply(swiss, flightData);
+console.log(swiss);
+
+// The more useful way is to use call method with spread operator in modern javascript
+book.call(swiss, ...flightData); */
+
+// Immediately invoked functions expressions..............................................
+// Ordinary Function
+/*const temp = 23;
+const runOnce = function() {
+    console.log('This will never run again');
+    console.log(temp);
+}
+runOnce();
+
+// IIFE
+(function() {
+    console.log('This will never run again');
+    console.log(temp);
+})();
+
+// also works for an arrow function 
+(() => console.log('This will ALSO never run again'))();
+((name) => console.log(`This will ALSO never run again ${name}`))('Waleed'); */
+
+// Clousers............................................
+const secureBooking = function() {
+    let passengerCount = 0;
+
+    return function() {
+        passengerCount++;
+        console.log(`${passengerCount} passengers`);
+    };
+};
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
