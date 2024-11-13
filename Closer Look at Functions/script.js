@@ -1,12 +1,13 @@
 // Closer Look at the Functions
 'use strict';
 
+// (12-11-2024)
 // Default Parameters....................................................................
 /*const bookings = [];
 
 // Default parameters
 const createBooking = function(flightNum, numPassengers = 1, price = 100 * numPassengers) {
-    // ES5 (We can do it like above in function arguments)
+    // ES5 (We can do it like above in function arguments which is ES6 feature)
     // numPassengers = numPassengers || 1;
     // price = price || 199;
 
@@ -75,7 +76,7 @@ const transformer = function(str, fn) {
     console.log(`Transformed by: ${fn.name}`);
 }
 
-// Below the upperFirstWord and oneWord are the call back functions
+// Below the upperFirstWord and oneWord are the call back functions(a function that is passed as an argument to another function)
 transformer('JavaScript is the best!', upperFirstWord);
 transformer('JavaScript is the best!', oneWord);
 
@@ -97,7 +98,7 @@ const toTitleCase = function (str) {
 };
 
 const toSnakeCase = function(str) {
-    return str.replace(/ /g, '').toLowerCase();
+    return str.replace(/ /g, '_').toLowerCase();
 }
 
 const textFormatter = function (str, fn) {
@@ -108,11 +109,11 @@ const textFormatter = function (str, fn) {
 
 // callback functions
 textFormatter('hello i am muhammad waleed', toTitleCase);
-textFormatter('hello i am muhammad waleed', toSnakeCase); */
+textFormatter('hello i am muhammad waleed', toSnakeCase);*/
 
 
 // Function Returning Functions.........................................................................
-const greet = function(greeting) {
+/*const greet = function(greeting) {
     return function(name) {
         console.log(`${greeting} ${name}`);
     };
@@ -120,4 +121,6 @@ const greet = function(greeting) {
 
 const greeterHey = greet('Hey');
 greeterHey('Waleed');
-greeterHey('Kamran');
+greeterHey('Kamran');*/
+
+
