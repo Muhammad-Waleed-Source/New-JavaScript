@@ -121,31 +121,3 @@ const greet = function(greeting) {
 const greeterHey = greet('Hey');
 greeterHey('Waleed');
 greeterHey('Kamran');
-
-console.log("Muhammad Waleed");
-adfsdhfkhdavhalsv
-
-vaskhvklsahvasjkvlasv
-aslvashvasnvmacvnasdvasdkva
-kvanvkanvavkanvakvncnvasnvlasviasdvnsd
-askvaskvslivscklnvasknvaskv
-lvaklvnlaknvksvkv;asdojoasdjvasjvas
-asvj;sdvksvsdvoksdv
-adfsdhfkhdavhalsv
-
-vaskhvklsahvasjkvlasv
-aslvashvasnvmacvnasdvasdkva
-kvanvkanvavkanvakvncnvasnvlasviasdvnsd
-askvaskvslivscklnvasknvaskv
-lvaklvnlaknvksvkv;asdojoasdjvasjvas
-asvj;sdvksvsdvoksdv
-adfsdhfkhdavhalsv
-
-vaskhvklsahvasjkvlasv
-aslvashvasnvmacvnasdvasdkva
-kvanvkanvavkanvakvncnvasnvlasviasdvnsd
-askvaskvslivscklnvasknvaskv
-lvaklvnlaknvksvkv;asdojoasdjvasjvas
-asvj;sdvksvsdvoksdv
-jasvsjvk
-kasvnlasnvlsnvasvnasklvsdv
