@@ -113,14 +113,20 @@ textFormatter('hello i am muhammad waleed', toSnakeCase);*/
 
 
 // Function Returning Functions.........................................................................
-/*const greet = function(greeting) {
+const greet1 = function(greeting) {
     return function(name) {
         console.log(`${greeting} ${name}`);
     };
 };
 
-const greeterHey = greet('Hey');
-greeterHey('Waleed');
-greeterHey('Kamran');*/
+// const greeterHey = greet1('Hey');
+// greeterHey('Waleed');
+// greeterHey('Kamran');
+
+greet1('Hello')('Ali'); // same as above greeterHey function
+
+// Challenge (Writing the above greet function as arrow function)
+const greet2 = greeting => name => console.log(`${greeting} ${name}`);
+greet2('Hello')('Faisal');
 
 
