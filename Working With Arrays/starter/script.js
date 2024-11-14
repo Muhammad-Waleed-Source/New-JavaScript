@@ -71,6 +71,76 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+// (14-11-2024)
+// Simple array methods.................................................................................
+/*let arr = ['a', 'b', 'c', 'd', 'e'];
+
+//SLICE method
+console.log(arr.slice(2)); // 2 is the index from where it will start extracting the values from array
+console.log(arr.slice(2, 4)); // it will start from 2 and end at 4
+console.log(arr.slice(-2)); // getting the last two elements from the array
+console.log(arr.slice(-1)); // getting the last elements from the array
+console.log(arr.slice(1, -2)); // starting from 1st index to 3rd index
+console.log(arr.slice()); // we can also create a shallow copy of array using slice method
+
+// SPLICE method(also work same as slice method but it also change the original array )
+// console.log(arr.splice(2));
+console.log(arr.splice(-1)); // The last element will get extracted
+console.log(arr.splice(1, 2)); // b and c will get deleted from the array(from index 1 to 2)
+console.log(arr); // The original array will not have the extarcted elements
+
+// Reverse method (this method mutate the original array as well)
+arr = ['a', 'b', 'c', 'd', 'e'];
+const arr2 = ['j', 'i', 'h', 'g', 'f'];
+console.log(arr2.reverse());
+console.log(arr2); // orginal array also mutated
+
+// CONCAT method (does not mutate the original array)
+const letters = arr.concat(arr2);
+console.log(letters);
+console.log([...arr, ...arr2]); // same as the above concate method
+
+// JOIN method
+console.log(letters.join(' - ')); */
+
+
+// New at method(ES2022)....................................................................................
+/*const arr = [23, 11, 64];
+console.log(arr[0]);
+console.log(arr.at(0)); // same as the above
+
+// Getting the last element from the array
+console.log(arr[arr.length - 1]);
+console.log(arr.slice(-1)[0]);
+
+console.log(arr.at(-1)); // same as the above two
+console.log(arr.at(-2));
+
+// The at method also works on strings
+console.log('Waleed'.at(0));
+console.log('Waleed'.at(-1)); */
+
+
+// Looping arrays (forEach method).........................................................................
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+for (const movement of movements) {
+  if(movement > 0)
+    console.log(`You deposited ${movement}`);
+  else
+    console.log(`You withdrew ${Math.abs(movement)}`);
+}
+
+// using for each method to achieve the exact same thing above
+console.log('---- FOR EACH----');
+movements.forEach(function(movement) { // callback function
+  if(movement > 0)
+    console.log(`You deposited ${movement}`);
+  else
+    console.log(`You withdrew ${Math.abs(movement)}`);
+})
