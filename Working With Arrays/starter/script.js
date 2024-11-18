@@ -69,12 +69,9 @@ const displayMovements = function (movements) {
 
     const html = `
         <div class="movements__row">
-          <div class="movements__type movements__type--${type}"> ${
-      i + 1
-    } ${type}</div>
-          <div class="movements__value">${mov}</div>
-        </div>
-    `;
+          <div class="movements__type movements__type--${type}"> ${i + 1} ${type}</div>
+          <div class="movements__value">${mov}$</div>
+        </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
@@ -82,6 +79,32 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+const calcDisplayBalance = function(movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} $`;
+};
+calcDisplayBalance(account1.movements)
+
+const calcDisplaySummary = function(movements) {
+  const incomes = movements
+  .filter(mov => mov > 0)
+  .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes} $`;
+
+  const out = movements
+  .filter(mov => mov < 0)
+  .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)} $`;
+
+  const interest = movements.filter(mov => mov > 0)
+  .map(deposit => deposit * 1.2/100)
+  .reduce((acc, int) => acc + int, 0);
+
+  labelSumInterest.textContent = `${interest} $`;
+};
+calcDisplaySummary(account1.movements)
+
+// For each function.....
 const createUserNames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -93,7 +116,8 @@ const createUserNames = function (accs) {
 };
 
 createUserNames(accounts);
-console.log(accounts);
+// console.log(accounts);
+
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -242,7 +266,7 @@ console.log(movementsDescr); */
 // Using map and for each method to compute Usernames at the top of the code.....................
 
 // Filter Method........................................................................
-const deposits = movements.filter(function(mov) {
+/*const deposits = movements.filter(function(mov) {
   return mov > 0;
 })
 
@@ -260,4 +284,61 @@ console.log(withdrawls);
 
 const withdrawlFOR = [];
 for (const mov of movements) if(mov < 0) withdrawlFOR.push(mov);
-console.log(withdrawlFOR);
+console.log(withdrawlFOR); */
+
+// Reduce Method......................................................................
+console.log(movements);
+
+// accumulator is like a snowball
+// const balance = movements.reduce(function(acc, curr, i, arr) {
+//   console.log(`Iteration ${i}: ${acc}`);
+//   return acc + curr;
+// }, 0); // here 0 is the initial value of accumulator"acc"
+
+// By using the arrow function
+const balance = movements.reduce((acc, curr) => acc + curr, 0);
+console.log(balance);
+
+// doing the above same thing using for loop
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2);
+
+// We can also do other things using reduce method
+// Maximum value in movements array
+const max = movements.reduce((acc, mov) => {
+  if(acc > mov)
+    return acc;
+  else
+    return mov;
+}, movements[0]);// the initial value of accumualtor is the first element of array
+console.log(max);
+
+
+// Coding Challenge 2
+/*const calcAverageHumanAge = function(ages) {
+  // 1. calculating human ages based on dogs ages by creating new shallow array using map methos
+  const humanAges = ages.map(age => age <= 2 ? 2 * age : 16 + age * 4);
+  
+  // 2. Excluding dogs that are less than 18 human years old using filter method
+  const adults = humanAges.filter(age => age>=18)
+  console.log(humanAges);
+  console.log(adults);
+
+  // 3. Calculating average
+  const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
+  return average;
+}
+
+const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+console.log(avg1); */
+
+// Chaining method (using the filter, map and reduce method all in once)
+// Example converting the movements array elements from euro to usd
+/*const euroToUSD = 1.1;
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * euroToUSD)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(totalDepositsUSD);*/
