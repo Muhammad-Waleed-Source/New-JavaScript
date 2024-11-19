@@ -77,32 +77,28 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
-
 const calcDisplayBalance = function(movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${balance} $`;
 };
-calcDisplayBalance(account1.movements)
 
-const calcDisplaySummary = function(movements) {
-  const incomes = movements
+const calcDisplaySummary = function(acc) {
+  const incomes = acc.movements
   .filter(mov => mov > 0)
   .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${incomes} $`;
 
-  const out = movements
+  const out = acc.movements
   .filter(mov => mov < 0)
   .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(out)} $`;
 
-  const interest = movements.filter(mov => mov > 0)
-  .map(deposit => deposit * 1.2/100)
+  const interest = acc.movements.filter(mov => mov > 0)
+  .map(deposit => deposit * acc.interestRate/100)
   .reduce((acc, int) => acc + int, 0);
 
   labelSumInterest.textContent = `${interest} $`;
 };
-calcDisplaySummary(account1.movements)
 
 // For each function.....
 const createUserNames = function (accs) {
@@ -118,6 +114,33 @@ const createUserNames = function (accs) {
 createUserNames(accounts);
 // console.log(accounts);
 
+// Event Handelers
+let currentAccount;
+
+btnLogin.addEventListener('click', function(e) {
+  // Prevent form from submitting(in HTML)
+  e.preventDefault();
+
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
+  console.log(currentAccount);
+
+  if(currentAccount?.pin === Number(inputLoginPin.value)) { // Here optional chaining'?' is used instead of &&
+    // Display UI and welcome message
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+    containerApp.style.opacity = 100;
+
+    // clear the input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    // Display Movements
+    displayMovements(currentAccount.movements);
+    // Display balance
+    calcDisplayBalance(currentAccount.movements);
+    // Display summary
+    calcDisplaySummary(currentAccount);
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -287,7 +310,7 @@ for (const mov of movements) if(mov < 0) withdrawlFOR.push(mov);
 console.log(withdrawlFOR); */
 
 // Reduce Method......................................................................
-console.log(movements);
+/*console.log(movements);
 
 // accumulator is like a snowball
 // const balance = movements.reduce(function(acc, curr, i, arr) {
@@ -312,7 +335,7 @@ const max = movements.reduce((acc, mov) => {
   else
     return mov;
 }, movements[0]);// the initial value of accumualtor is the first element of array
-console.log(max);
+console.log(max);*/
 
 
 // Coding Challenge 2
@@ -342,3 +365,26 @@ const totalDepositsUSD = movements
   .reduce((acc, mov) => acc + mov, 0);
 
 console.log(totalDepositsUSD);*/
+
+// Find method (used to find one element)..........................................................................
+/*const firstWithdrawl = movements.find(mov => mov < 0);
+
+console.log(movements);
+console.log(firstWithdrawl);
+
+// Best use case of find method on objects
+console.log(accounts);
+
+// finding the object with the owner name Jessica Davis
+const accountt = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(accountt);
+
+// doing the above same thing using for of loop
+let account = null;
+for(const acc of accounts) {
+  if(acc.owner === 'Jessica Davis'){
+    account = acc;
+    break;
+  } 
+}
+console.log(account); */
