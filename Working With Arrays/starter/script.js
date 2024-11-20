@@ -77,9 +77,10 @@ const displayMovements = function (movements) {
   });
 };
 
-const calcDisplayBalance = function(movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} $`;
+const calcDisplayBalance = function(acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+
+  labelBalance.textContent = `${acc.balance} $`;
 };
 
 const calcDisplaySummary = function(acc) {
@@ -114,6 +115,15 @@ const createUserNames = function (accs) {
 createUserNames(accounts);
 // console.log(accounts);
 
+const updateUI = function(acc) {
+  // Display Movements
+  displayMovements(acc.movements);
+  // Display balance
+  calcDisplayBalance(acc);
+  // Display summary
+  calcDisplaySummary(acc);
+}
+
 // Event Handelers
 let currentAccount;
 
@@ -133,15 +143,61 @@ btnLogin.addEventListener('click', function(e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
-    // Display Movements
-    displayMovements(currentAccount.movements);
-    // Display balance
-    calcDisplayBalance(currentAccount.movements);
-    // Display summary
-    calcDisplaySummary(currentAccount);
+    // update
+    updateUI(currentAccount);
   }
 });
 
+btnTransfer.addEventListener('click', function(e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const recieverAcc = accounts.find(acc => acc.username === inputTransferTo.value);
+  
+  inputTransferAmount.value = inputTransferTo.value = '';
+
+  // here we used optional chaining, if the user account doesn't exist so it will be undefined and if exist then other condition will be checked
+  if(amount > 0 && recieverAcc && currentAccount.balance >= amount && recieverAcc?.username !== currentAccount.username) {
+    // doing the transfer
+    currentAccount.movements.push(-amount);
+    recieverAcc.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+});
+
+btnLoan.addEventListener('click', function(e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if(amount > 0 && currentAccount.movements.some(mov => mov >= amount*0.1)) // 10%
+  {
+    // Add movement
+    currentAccount.movements.push(amount);
+
+    // Update the UI
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
+
+// Closing account
+btnClose.addEventListener('click', function(e) {
+  e.preventDefault();
+
+  if(inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin)
+  {
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username);
+    console.log(index);
+    accounts.splice(index, 1);
+
+    // Hide UI after deleting the account
+    containerApp.style.opacity = 0;
+  }
+
+  inputCloseUsername.value = inputClosePin.value = '';
+});
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -388,3 +444,51 @@ for(const acc of accounts) {
   } 
 }
 console.log(account); */
+
+console.log(movements);
+// checks only for equality...........................................................................
+console.log(movements.includes(-130)); // used to check the value is present in array or not
+console.log(movements.some(mov => mov === -130));
+
+// SOME condition: here we give the condition
+const anyDeposits = movements.some(mov => mov > 0);
+console.log(anyDeposits);
+
+// EVERY condition: returns true if all the elements satisfies the condition
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+
+// Separate callback
+const deposit = mov => mov> 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+
+// The flat and flat map methods.........................................................................
+const arr = [[1,2,3], [4,5,6], 7, 8];
+console.log(arr.flat()); // removes the nested array and print the array elements
+
+const arrDeep = [[[1,2],3], [4, [5, 6], 7, 8]];
+console.log(arrDeep.flat(2)); // here 2 is the depth of array nesting(by default is 1)
+
+// const accountMovements = accounts.map(acc => acc.movements);
+// console.log(accountMovements);
+// const allMovements = accountMovements.flat();
+// console.log(allMovements);
+
+// const overallBalance = allMovements.reduce((acc, mov ) => acc + mov , 0);
+// console.log(overallBalance);
+
+// we can do the all the above mess by using flat and Optional Chaining
+const overallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
+
+// flatMap function combines flat and map function for better performance
+// but here if we want to go deeper in the nested array so flatMap will not work we will use flat method
+const overallBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
