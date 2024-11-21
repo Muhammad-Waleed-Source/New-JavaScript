@@ -61,10 +61,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  const movs =  sort ? movements.slice().sort((a, b) => a-b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -198,6 +200,13 @@ btnClose.addEventListener('click', function(e) {
 
   inputCloseUsername.value = inputClosePin.value = '';
 });
+
+let sorted = false;
+btnSort.addEventListener('click', function(e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+})
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -445,7 +454,7 @@ for(const acc of accounts) {
 }
 console.log(account); */
 
-console.log(movements);
+/*console.log(movements);
 // checks only for equality...........................................................................
 console.log(movements.includes(-130)); // used to check the value is present in array or not
 console.log(movements.some(mov => mov === -130));
@@ -491,4 +500,57 @@ console.log(overallBalance);
 const overallBalance2 = accounts
   .flatMap(acc => acc.movements)
   .reduce((acc, mov) => acc + mov, 0);
-console.log(overallBalance);
+console.log(overallBalance); */
+
+// Sorting Array......................................................................
+// Strings
+/*const owners = ['Waleed', 'Kamran', 'Faisal', 'Aslam'];
+console.log(owners.sort()); // will sort the array alphabetically (but also mutate the original array)
+console.log(owners);
+
+// Numbers
+// console.log(movements);
+// console.log(movements.sort()); // this will not work because sort method only works with strings by default
+
+// return < 0 so A will be before B (A, B) (Keep Order)
+// return > 0 so B will be before A (B, A) (Switch Order)
+
+// movements.sort((a, b) => {
+//   if(a > b) return 1;
+//   if (b > a) return -1;
+// });
+console.log(movements);
+
+// We can also do it in easy way like
+// Ascending
+movements.sort((a, b) => a-b);
+// Descending
+movements.sort((a, b) => b-a);
+console.log(movements); */
+
+// More ways of creating and filling arrays...........................................................
+/*const arr = [1, 2, 3, 4, 5, 6, 7, 8];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7, 8));
+
+// we can aslo generate arrays programatically
+const x = new Array(7);
+
+x.fill(1, 3, 5); // 1 is the value and 3,5 are the indices
+console.log(x);
+
+arr.fill(23, 4, 6);
+console.log(arr);
+
+const y = Array.from({length: 7}, () => 1);
+console.log(y);
+
+const z = Array.from({length: 7}, ( _, i) => i + 1);
+console.log(z);
+
+const w = Array.from({length: 100}, ( _, i) => i+1);
+console.log(w);*/
+
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(document.querySelectorAll('.movements__value'));
+  console.log(movementsUI.map(el => el.textContent.replace('$', '')));
+});
