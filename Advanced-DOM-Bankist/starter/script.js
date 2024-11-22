@@ -68,6 +68,7 @@ header.append(message); // append add the elememt as the last child of the selec
 // header.before(message);
 // header.after(message);
 
+
 // Deleting elements
 document.querySelector('.btn--close-cookie').addEventListener('click', function() {
   message.remove(); // better way
